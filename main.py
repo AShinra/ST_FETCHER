@@ -126,10 +126,42 @@ def main(_site):
 
 
 
-x = st.button('Process')
+# x = st.button('Process')
 
-if x:
-    main('https://www.pna.gov.ph/articles/search?q=&p=')
+# if x:
+#     main('https://www.pna.gov.ph/articles/search?q=&p=')
+
+# import streamlit as st
+import os, sys
+
+@st.experimental_singleton
+def installff():
+  os.system('sbase install geckodriver')
+  os.system('ln -s /home/appuser/venv/lib/python3.7/site-packages/seleniumbase/drivers/geckodriver /home/appuser/venv/bin/geckodriver')
+
+
+_ = installff()
+# from selenium import webdriver
+# from selenium.webdriver import FirefoxOptions
+# opts = FirefoxOptions()
+# opts.add_argument("--headless")
+# browser = webdriver.Firefox(options=opts)
+
+options = Options()
+options.add_argument("--headless") # Runs Chrome in headless mode.
+options.add_argument('--no-sandbox') # Bypass OS security model
+options.add_argument('--disable-gpu')  # applicable to windows os only
+options.add_argument('start-maximized') # 
+options.add_argument('disable-infobars')
+options.add_argument("--disable-extensions")
+# options.add_argument(f'user-agent={random.choice(userAgents)}')
+driver = webdriver.Chrome(options=options)
+
+driver.get('https://businessmirror.com.ph/')
+st.write(driver.page_source)
+
+st.write(1)
+
 
 
     
